@@ -23,18 +23,18 @@ const itemSchema = new mongoose.Schema({
     required: true,
   },
 
-  category: {
-    type: ObjectId,
-    ref: "Category",
-    required: true,
-  },
-  // images: [
-  //   {
-  //     type: ObjectId,
-  //     ref: "Images",
-  //     required: true,
-  //   },
-  // ],
+  categoryId: [
+    {
+      type: ObjectId,
+      ref: "Category",
+    },
+  ],
+  imageId: [
+    {
+      type: ObjectId,
+      ref: "Image",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Item", itemSchema);

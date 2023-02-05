@@ -6,8 +6,10 @@ const router = require("express").Router();
 router.get("/dashboard", adminController.viewDashboard);
 
 // endpoint untuk item
-router.get("/item", adminController.viewItem);
-router.post("/item", uploadMultiple, adminController.addItem);
+router.get("/item", adminController.viewItem); // show item
+router.post("/item", uploadMultiple, adminController.addItem); // add item
+router.get("/item/show-image/:id", adminController.showImageItem); // show image item
+router.get("/item/:id", adminController.showEditItem); // show edit item
 
 // endpoint untuk category
 router.get("/category", adminController.viewCategory);

@@ -22,14 +22,53 @@
               <th>No</th>
               <th>Item Name</th>
               <th>Item Price</th>
-              <th>Item Description</th>
-              <th>Item Image</th>
-              <th>Item Category</th>
               <th>Item Stock</th>
               <th>Item Status</th>
               <th>Item Action</th>
             </tr>
           </thead>
+          <tbody>
+            <% item.forEach(function(Item, index) { %>
+            <tr>
+              <td><%= index+1 %></td>
+              <td><%= Item.name %></td>
+              <td><%= Item.price %></td>
+              <td><%= Item.stock %></td>
+              <td><%= Item.status %></td>
+              <td>
+                <form
+                  action="/admin/item/<%= item[index].id
+                %>?_method=DELETE"
+                  method="POST"
+                >
+                  <a
+                    href="/admin/item/show-image/<%= item[index].id %>"
+                    type="button"
+                    class="btn btn-primary btn-circle btn-sm"
+                    ><i class="fa fa-image"></i>
+                  </a>
+                  <a
+                    href="/admin/item/<%= item[index].id %>"
+                    class="btn btn-warning btn-circle btn-sm"
+                    ><i class="fa fa-edit"></i>
+                  </a>
+                  <button
+                    type="submit"
+                    class="btn btn-danger btn-circle btn-sm"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <a
+                    href="#"
+                    type="button"
+                    class="btn btn-success btn-circle btn-sm"
+                    ><i class="fa fa-plus"></i
+                  ></a>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
         </table>
       </div>
     </div>
