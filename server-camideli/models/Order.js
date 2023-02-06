@@ -16,7 +16,6 @@ const orderSchema = new mongoose.Schema({
       },
       name: {
         type: String,
-        required: true,
       },
       price: {
         type: Number,
@@ -40,23 +39,19 @@ const orderSchema = new mongoose.Schema({
     type: ObjectId,
     ref: "Bank",
   },
-  payment: {
+  payments: {
     // This is the new field
     proofPayment: {
       type: String,
-      required: true,
     },
     bankFrom: {
       type: String,
-      required: true,
     },
     status: {
       type: String,
-      required: true,
     },
     accountHolder: {
       type: String,
-      required: true,
     },
   },
 });

@@ -11,7 +11,7 @@ const flash = require("connect-flash");
 //import mongoose
 var mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/db_camideli", {
+mongoose.connect("mongodb://localhost:27017/db_camideli_v2", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

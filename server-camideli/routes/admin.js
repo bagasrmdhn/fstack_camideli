@@ -1,11 +1,13 @@
 const adminController = require("../controllers/adminController");
 const { uploadMultiple } = require("../middleware/multer");
+const auth = require("../middleware/auth");
 
 const router = require("express").Router();
 
 router.get("/signin", adminController.viewSignin);
 router.post("/signin", adminController.actionSignin);
-
+router.use(auth);
+router.get("/logout", adminController.actionLogout);
 router.get("/dashboard", adminController.viewDashboard);
 
 // endpoint untuk item

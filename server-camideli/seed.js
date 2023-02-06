@@ -335,12 +335,14 @@ var data = [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cee1"),
         invoice: 1231231,
-        itemId: {
-          _id: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
-          title: "Kopi Aren",
-          price: 6,
-          quantity: 2,
-        },
+        itemId: [
+          {
+            _id: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
+            name: "Kopi Aren",
+            price: 6,
+            quantity: 2,
+          },
+        ],
         total: 12,
         memberId: mongoose.Types.ObjectId("5e96cbe292b97300fc903333"),
         bankId: mongoose.Types.ObjectId("5e96cbe292b97300fc903323"),

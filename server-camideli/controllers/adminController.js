@@ -3,6 +3,8 @@ const Item = require("../models/Item");
 const Image = require("../models/Image");
 const Bank = require("../models/Bank");
 const Users = require("../models/Users");
+const Order = require("../models/Order");
+const Member = require("../models/Member");
 const fs = require("fs-extra");
 const path = require("path");
 const bcrypt = require("bcryptjs");
@@ -13,10 +15,14 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
-      res.render("index", {
-        alert,
-        title: "Camideli | Login",
-      });
+      if (req.session.user == null || req.session.user == undefined) {
+        res.render("index", {
+          alert,
+          title: "Camideli | Login",
+        });
+      } else {
+        return res.redirect("/admin/dashboard");
+      }
     } catch (error) {
       res.redirect("/admin/signin");
     }
@@ -26,7 +32,7 @@ module.exports = {
     try {
       const { username, password } = req.body;
       const user = await Users.findOne({ username: username });
-      console.log(user);
+      // console.log(user);
       if (user == null) {
         req.flash("alertMessage", "User not found");
         req.flash("alertStatus", "danger");
@@ -38,6 +44,10 @@ module.exports = {
         req.flash("alertStatus", "danger");
         return res.redirect("/admin/signin");
       }
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+      };
 
       res.redirect("/admin/dashboard");
     } catch (error) {
@@ -45,10 +55,20 @@ module.exports = {
     }
   },
 
+  actionLogout: (req, res) => {
+    req.session.destroy();
+    res.redirect("/admin/signin");
+  },
+
   viewDashboard: (req, res) => {
-    res.render("admin/dashboard/view_dashboard", {
-      title: "Camideli | Dashboard",
-    });
+    try {
+      res.render("admin/dashboard/view_dashboard", {
+        title: "Camideli | Dashboard",
+        user: req.session.user,
+      });
+    } catch (error) {
+      res.redirect("/admin/dashboard");
+    }
   },
   viewItem: async (req, res) => {
     try {
@@ -65,6 +85,7 @@ module.exports = {
         alert,
         category,
         item,
+        user: req.session.user,
         action: "view",
       });
     } catch (error) {
@@ -89,6 +110,7 @@ module.exports = {
         alert,
         category,
         item,
+        user: req.session.user,
         action: "show image",
       });
     } catch (error) {
@@ -108,7 +130,7 @@ module.exports = {
           path: "categoryId",
           select: "id name",
         });
-      console.log(item);
+      // console.log(item);
       const category = await Category.find();
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
@@ -118,6 +140,7 @@ module.exports = {
         alert,
         category,
         item,
+        user: req.session.user,
         action: "edit",
       });
     } catch (error) {
@@ -220,7 +243,7 @@ module.exports = {
           fs.unlink(path.join(`public/${Image.imageUrl}`));
           Image.remove();
         });
-        console.log(item.imageId[i]._id);
+        // console.log(item.imageId[i]._id);
       }
       await item.remove();
       req.flash("alertMessage", "Success Delete Item");
@@ -243,6 +266,7 @@ module.exports = {
       res.render("admin/category/view_category", {
         category,
         alert,
+        user: req.session.user,
         title: "Camideli | Category",
       });
     } catch (error) {
@@ -308,6 +332,7 @@ module.exports = {
       res.render("admin/bank/view_bank", {
         title: "Camideli | Bank",
         alert,
+        user: req.session.user,
         bank,
       });
     } catch (error) {
@@ -371,9 +396,22 @@ module.exports = {
     }
   },
 
-  viewOrder: (req, res) => {
-    res.render("admin/order/view_order", {
-      title: "Camideli | Order",
-    });
+  viewOrder: async (req, res) => {
+    try {
+      const order = await Order.find().populate("memberId").populate("bankId");
+
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+
+      res.render("admin/order/view_order", {
+        title: "Camideli | Order",
+        user: req.session.user,
+        alert,
+        order,
+      });
+    } catch (error) {
+      res.redirect("/admin/order");
+    }
   },
 };

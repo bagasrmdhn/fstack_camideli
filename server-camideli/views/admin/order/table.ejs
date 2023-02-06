@@ -24,6 +24,45 @@
             <th>Action</th>
           </tr>
         </thead>
+        <tbody>
+          <% order.forEach(function(Order, index) { %>
+          <tr>
+            <td><%= index+1 %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+            <td><%= Order.invoice %></td>
+
+            <td>
+              <form
+                action="/admin/order/<%= order[index].id
+                %>?_method=DELETE"
+                method="POST"
+              >
+                <a
+                  href="javascript:void()"
+                  type="button"
+                  class="btn btn-warning btn-circle btn-sm button-update"
+                  data-id="<%= order[index].id %>"
+                  data-name="<%= order[index].name %>"
+                  data-accountnumber="<%= order[index].accountNumber %>"
+                  data-ordername="<%= order[index].orderName %>"
+                  ><i class="fa fa-edit"></i>
+                </a>
+                <button type="submit" class="btn btn-danger btn-circle btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+
+          <% }); %>
+        </tbody>
       </table>
     </div>
   </div>
