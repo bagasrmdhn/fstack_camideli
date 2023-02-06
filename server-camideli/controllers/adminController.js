@@ -2,10 +2,49 @@ const Category = require("../models/Category");
 const Item = require("../models/Item");
 const Image = require("../models/Image");
 const Bank = require("../models/Bank");
+const Users = require("../models/Users");
 const fs = require("fs-extra");
 const path = require("path");
+const bcrypt = require("bcryptjs");
 
 module.exports = {
+  viewSignin: async (req, res) => {
+    try {
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+      res.render("index", {
+        alert,
+        title: "Camideli | Login",
+      });
+    } catch (error) {
+      res.redirect("/admin/signin");
+    }
+  },
+
+  actionSignin: async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const user = await Users.findOne({ username: username });
+      console.log(user);
+      if (user == null) {
+        req.flash("alertMessage", "User not found");
+        req.flash("alertStatus", "danger");
+        return res.redirect("/admin/signin");
+      }
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+      if (!isPasswordMatch) {
+        req.flash("alertMessage", "Username / Password not match");
+        req.flash("alertStatus", "danger");
+        return res.redirect("/admin/signin");
+      }
+
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      res.redirect("/admin/signin");
+    }
+  },
+
   viewDashboard: (req, res) => {
     res.render("admin/dashboard/view_dashboard", {
       title: "Camideli | Dashboard",
@@ -115,13 +154,78 @@ module.exports = {
           });
           item.imageId.push({ _id: imageSave._id });
           await item.save();
-          console.log(req.files[i].filename);
         }
 
         req.flash("alertMessage", "Success Add Item");
         req.flash("alertStatus", "success");
         res.redirect("/admin/item");
       }
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/item");
+    }
+  },
+
+  editItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+        categoryId,
+        item_name,
+        item_price,
+        item_stock,
+        item_status,
+        about,
+      } = req.body;
+      const item = await Item.findOne({ _id: id })
+        .populate({ path: "imageId", select: "id imageUrl" })
+        .populate({ path: "categoryId", select: "id name" });
+      if (req.files.length > 0) {
+        for (let i = 0; i < item.imageId.length; i++) {
+          const imageUpdate = await Image.findOne({ _id: item.imageId[i]._id });
+          await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`));
+          imageUpdate.imageUrl = `images/${req.files[i].filename}`;
+          await imageUpdate.save();
+          // console.log(req.files[i].filename);
+          req.flash("alertMessage", "Success Update Item");
+          req.flash("alertStatus", "success");
+          res.redirect("/admin/item");
+        }
+      } else {
+        item.categoryId = categoryId;
+        item.name = item_name;
+        item.price = item_price;
+        item.stock = item_stock;
+        item.status = item_status;
+        item.description = about;
+        await item.save();
+        req.flash("alertMessage", "Success Update Item");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/item");
+      }
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/item");
+    }
+  },
+
+  deleteItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Item.findOne({ _id: id }).populate("imageId");
+      for (let i = 0; i < item.imageId[i].length; i++) {
+        Image.findOne({ _id: item.imageId[i]._id }).then((Image) => {
+          fs.unlink(path.join(`public/${Image.imageUrl}`));
+          Image.remove();
+        });
+        console.log(item.imageId[i]._id);
+      }
+      await item.remove();
+      req.flash("alertMessage", "Success Delete Item");
+      req.flash("alertStatus", "success");
+      res.redirect("/admin/item");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

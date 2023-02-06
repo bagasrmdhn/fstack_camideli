@@ -8,9 +8,9 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-12">
-          <h3 class="text-center">Add Item</h3>
+          <h3 class="text-center">Edit Item</h3>
           <form
-            action="/admin/item"
+            action="/admin/item/<%= item.id %>?_method=PUT"
             method="post"
             enctype="multipart/form-data"
           >
@@ -50,8 +50,8 @@
             <div class="form-group">
               <label for="item_category">Item Category</label>
               <select name="categoryId" id="" class="form-control">
-                <option value="<%= item.categoryId.name %>">
-                  <%= item.categoryId.name %>
+                <option value="<%= item.categoryId[0]._id %>">
+                  <%= item.categoryId[0].name %>
                 </option>
                 <% for (let i = 0; i < category.length; i++) { %>
                 <option value="<%= category[i].id %>">

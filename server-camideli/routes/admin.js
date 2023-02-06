@@ -3,6 +3,9 @@ const { uploadMultiple } = require("../middleware/multer");
 
 const router = require("express").Router();
 
+router.get("/signin", adminController.viewSignin);
+router.post("/signin", adminController.actionSignin);
+
 router.get("/dashboard", adminController.viewDashboard);
 
 // endpoint untuk item
@@ -10,6 +13,8 @@ router.get("/item", adminController.viewItem); // show item
 router.post("/item", uploadMultiple, adminController.addItem); // add item
 router.get("/item/show-image/:id", adminController.showImageItem); // show image item
 router.get("/item/:id", adminController.showEditItem); // show edit item
+router.put("/item/:id", uploadMultiple, adminController.editItem); // show edit item
+router.delete("/item/:id/delete", adminController.deleteItem); // delete item
 
 // endpoint untuk category
 router.get("/category", adminController.viewCategory);
