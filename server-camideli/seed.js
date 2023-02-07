@@ -334,6 +334,7 @@ var data = [
     documents: [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cee1"),
+        orderDate: "2020-04-10",
         invoice: 1231231,
         itemId: [
           {
@@ -352,6 +353,7 @@ var data = [
           status: "Proses",
           accountHolder: "ang",
         },
+        status: "menunggu konfirmasi",
       },
     ],
   },

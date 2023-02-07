@@ -1,7 +1,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -20,7 +20,7 @@
             <th>Payment Status</th>
             <th>Order Status</th>
             <th>Order Date</th>
-            <th>Order Total</th>
+            <th>Total</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -29,35 +29,22 @@
           <tr>
             <td><%= index+1 %></td>
             <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
-            <td><%= Order.invoice %></td>
+            <td>
+              <%= Order.memberId.firstName +" "+ Order.memberId.lastName %>
+            </td>
+            <td><%= Order.payments.bankFrom %></td>
+            <td><%= Order.payments.status %></td>
+            <td><%= Order.status %></td>
+
+            <td><%= Order.orderDate.toLocaleString().substr(0, 9)%></td>
+            <td><%= Order.total %></td>
 
             <td>
-              <form
-                action="/admin/order/<%= order[index].id
-                %>?_method=DELETE"
-                method="POST"
-              >
-                <a
-                  href="javascript:void()"
-                  type="button"
-                  class="btn btn-warning btn-circle btn-sm button-update"
-                  data-id="<%= order[index].id %>"
-                  data-name="<%= order[index].name %>"
-                  data-accountnumber="<%= order[index].accountNumber %>"
-                  data-ordername="<%= order[index].orderName %>"
-                  ><i class="fa fa-edit"></i>
-                </a>
-                <button type="submit" class="btn btn-danger btn-circle btn-sm">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </form>
+              <a
+                href="/admin/order/<%=Order._id %>"
+                class="btn btn-success btn-circle btn-sm"
+                ><i class="fa fa-eye"></i>
+              </a>
             </td>
           </tr>
 

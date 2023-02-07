@@ -17,6 +17,7 @@ router.get("/item/show-image/:id", adminController.showImageItem); // show image
 router.get("/item/:id", adminController.showEditItem); // show edit item
 router.put("/item/:id", uploadMultiple, adminController.editItem); // show edit item
 router.delete("/item/:id/delete", adminController.deleteItem); // delete item
+router;
 
 // endpoint untuk category
 router.get("/category", adminController.viewCategory);
@@ -33,5 +34,8 @@ router.delete("/bank/:id", adminController.deleteBank);
 
 // endpoint untuk feature
 router.get("/order", adminController.viewOrder);
+router.get("/order/:id", adminController.showDetailOrder);
+router.put("/order/:id/confirmation", adminController.actionConfirmation);
+router.put("/order/:id/reject", adminController.actionReject);
 
 module.exports = router;

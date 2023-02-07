@@ -414,4 +414,51 @@ module.exports = {
       res.redirect("/admin/order");
     }
   },
+
+  showDetailOrder: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const order = await Order.findOne({ _id: id })
+        .populate("memberId")
+        .populate("bankId");
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+      res.render("admin/order/show_detail_order", {
+        title: "Camideli | Detail Order",
+        user: req.session.user,
+        alert,
+        order,
+      });
+    } catch (error) {
+      res.redirect("/admin/order");
+    }
+  },
+
+  actionConfirmation: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const order = Order.findOne({ _id: id });
+      order.status = "Accept";
+      await order.save();
+      req.flash("alertMessage", "Success Confirmation");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/order/${id}`);
+    } catch (error) {
+      res.redirect(`/admin/order/${id}`);
+    }
+  },
+  actionReject: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const order = Order.findOne({ _id: id });
+      order.status = "Reject";
+      await order.save();
+      req.flash("alertMessage", "Success Confirmation");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/order/${id}`);
+    } catch (error) {
+      res.redirect(`/admin/order/${id}`);
+    }
+  },
 };

@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema({
+  orderDate: {
+    type: Date,
+    required: true,
+  },
   invoice: {
     type: String,
     required: true,
@@ -53,6 +57,10 @@ const orderSchema = new mongoose.Schema({
     accountHolder: {
       type: String,
     },
+  },
+  status: {
+    type: String,
+    required: true,
   },
 });
 
