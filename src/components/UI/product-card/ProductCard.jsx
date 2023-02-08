@@ -28,17 +28,17 @@ const ProductCard = (props) => {
         <img src={image01} alt="product-img" className="w-50" />
       </div>
 
-      <div className="product__content">
-        <h5>
-          <Link to={`/foods/${id}`}>{title}</Link>
-        </h5>
-        <div className=" d-flex align-items-center justify-content-between ">
-          <span className="product__price">${price}</span>
-          <button className="addTOCart__btn" onClick={addToCart}>
-            Add to Cart
-          </button>
+      <Link to={`/foods/${id}`}>
+        <div className="product__content">
+          <h5>{title}</h5>
+          <div className=" d-flex align-items-center justify-content-between ">
+            <span className="product__price">${price}</span>
+            <button className="addTOCart__btn" onClick={addToCart}>
+              Add to Cart
+            </button>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

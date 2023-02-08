@@ -53,6 +53,7 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
       type: String,
+      default: "Proccessing",
     },
     accountHolder: {
       type: String,
@@ -60,7 +61,7 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: true,
+    default: "Proccessing",
   },
 });
 
