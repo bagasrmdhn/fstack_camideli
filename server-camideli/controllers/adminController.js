@@ -60,11 +60,14 @@ module.exports = {
     res.redirect("/admin/signin");
   },
 
-  viewDashboard: (req, res) => {
+  viewDashboard: async (req, res) => {
     try {
+      const member = await Member.find();
+
       res.render("admin/dashboard/view_dashboard", {
         title: "Camideli | Dashboard",
         user: req.session.user,
+        member,
       });
     } catch (error) {
       res.redirect("/admin/dashboard");
@@ -437,11 +440,12 @@ module.exports = {
 
   actionConfirmation: async (req, res) => {
     const { id } = req.params;
+    const { status } = req.body;
     try {
-      const order = Order.findOne({ _id: id });
-      order.status = "Accept";
+      const order = await Order.findOne({ _id: id });
+      order.payments.status = status;
       await order.save();
-      req.flash("alertMessage", "Success Confirmation");
+      req.flash("alertMessage", "Success Updating Payment Status");
       req.flash("alertStatus", "success");
       res.redirect(`/admin/order/${id}`);
     } catch (error) {
@@ -450,6 +454,7 @@ module.exports = {
   },
   actionReject: async (req, res) => {
     const { id } = req.params;
+
     try {
       const order = Order.findOne({ _id: id });
       order.status = "Reject";

@@ -26,7 +26,7 @@ import product_06_image_03 from "../images/bread(3).png";
 const products = [
   {
     id: "01",
-    title: "Chicken Burger",
+    title: "Chicken Burger Enak",
     price: 24.0,
     image01: product_01_image_01,
     image02: product_01_image_02,

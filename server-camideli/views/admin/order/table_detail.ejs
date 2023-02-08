@@ -10,33 +10,38 @@
           alt="img"
           style="width: 100%; display: block"
         />
-        <form action="/admin/order/<%=order.id%>/confirmation?_method=PUT" method="post">
-          <!-- <div class="form-group">
-            <label for="status">Status</label>
-            <select
-              class="form-control"
-              name="status"
-              id="status"
-              value="<%= order.status %>"
-            >
-              <option value="Waiting Payment">Waiting Payment</option>
-              <option value="On Proccess">On Proccess</option>
-              <option value="Shipping">Shipping</option>
+        <div class="row ml-1">
+          <form
+            action="/admin/order/<%= order.id %>/confirmation?_method=PUT"
+            method="POST"
+          >
+            <!-- <button type="submit" class="btn btn-success btn-sm">
+              <i class="fas fa-check"></i>
+              Confirmation
+            </button> -->
+            <select name="status" class="form-control">
+              <option value="<%= order.payments.status %>">
+                <%= order.payments.status %>
+              </option>
+              <option value="Proses">Proses</option>
               <option value="Success">Success</option>
+              <option value="Reject">Reject</option>
             </select>
-          </div> -->
-          <button type="submit" class="btn btn-success">
-            <i class="fa fa-times"></i> Approve
-        </button>
-          <div class="row ml-1">
-
-              <button type="submit" class="btn btn-primary">Update</button>
-            </form>
-            <form action="/admin/order/<%=order.id%>/reject?_method=PUT" method="post" class="ml-2">
-                <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-times"></i> Reject
-                </button>
-            </form>
+            <button type="submit" class="btn btn-success btn-sm mt-2">
+              <!-- <i class="fas fa-check"></i> -->
+              Update
+            </button>
+          </form>
+          <!-- <form
+            action="/admin/order/<%= order.id %>/reject?_method=PUT"
+            method="POST"
+            class="ml-2"
+          >
+            <button type="submit" class="btn btn-danger btn-sm">
+              <i class="fas fa-times"></i>
+              Reject
+            </button>
+          </form> -->
         </div>
       </div>
       <div class="col-md-8">
@@ -52,19 +57,21 @@
               </tr>
             </thead>
             <tbody>
-                <%for(let x = 0; x < order.itemId.length; x++) { %>
+              <%for(let x = 0; x < order.itemId.length; x++) { %>
 
-                <tr>
-                    <td><%= order.memberId.firstName + " " + order.memberId.lastName %></td>
-                    <td><%= order.payments.bankFrom %></td>
-                    <td><%= order.itemId[x].name %></td>
-                    <td><%= order.itemId[x].quantity %></td>
-                    <td><%= order.total %></td>
-                </tr>
-                <% } %>
+              <tr>
+                <td>
+                  <%= order.memberId.firstName + " " + order.memberId.lastName
+                  %>
+                </td>
+                <td><%= order.payments.bankFrom %></td>
+                <td><%= order.itemId[x].name %></td>
+                <td><%= order.itemId[x].quantity %></td>
+                <td><%= order.total %></td>
+              </tr>
+              <% } %>
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
