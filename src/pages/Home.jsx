@@ -29,6 +29,7 @@ import whyImg from "../assets/images/location.png";
 import networkImg from "../assets/images/network.png";
 
 import TestimonialSlider from "../components/UI/slider/TestimonialSlider.jsx";
+import axios from "axios";
 
 const featureData = [
   {
@@ -51,13 +52,23 @@ const featureData = [
 
 const Home = () => {
   const [category, setCategory] = useState("ALL");
-  const [allProducts, setAllProducts] = useState(products);
+  // const [allProducts, setAllProducts] = useState(products);
+  const [allProducts, setAllProducts] = useState([]);
+
+  const getProduct = async () => {
+    const res = await axios.get(
+      "https://server-camideli.yellowsandstravel.com/api/v1/member/landing-page"
+    );
+    console.log(res.data);
+    setAllProducts(res.data);
+  };
 
   const [hotPizza, setHotPizza] = useState([]);
 
   useEffect(() => {
     const filteredPizza = products.filter((item) => item.category === "Pizza");
     const slicePizza = filteredPizza.slice(0, 4);
+    getProduct();
     setHotPizza(slicePizza);
   }, []);
 
@@ -170,7 +181,7 @@ const Home = () => {
               </p>
             </Col>
 
-            {featureData.map((item, index) => (
+            {/* {featureData.map((item, index) => (
               <Col lg="4" md="6" sm="6" key={index} className="mt-5">
                 <div className="feature__item text-center px-5 py-3">
                   <img
@@ -182,7 +193,7 @@ const Home = () => {
                   <p>{item.desc}</p>
                 </div>
               </Col>
-            ))}
+            ))} */}
           </Row>
         </Container>
       </section>
@@ -236,11 +247,11 @@ const Home = () => {
               </div>
             </Col>
 
-            {allProducts.map((item) => (
+            {/* {allProducts.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
                 <ProductCard item={item} />
               </Col>
-            ))}
+            ))} */}
           </Row>
         </Container>
       </section>

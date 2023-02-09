@@ -11,10 +11,13 @@ const flash = require("connect-flash");
 //import mongoose
 var mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/db_camideli_v2", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://camideli:Bara1234@cluster0.10owyxz.mongodb.net/db_camideli?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");

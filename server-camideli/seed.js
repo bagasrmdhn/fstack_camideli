@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 
 // Connect to MongoDB via Mongoose
 seeder.connect(
-  "mongodb://127.0.0.1:27017/db_camideli_v2",
+  "mongodb+srv://camideli:Bara1234@cluster0.10owyxz.mongodb.net/db_camideli?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     // useFindAndModify: true,
@@ -402,7 +402,7 @@ var data = [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903345"),
         username: "admin",
-        password: "rahasia",
+        password: "admin",
       },
     ],
   },

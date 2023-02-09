@@ -216,7 +216,7 @@ module.exports = {
           // console.log(req.files[i].filename);
           req.flash("alertMessage", "Success Update Item");
           req.flash("alertStatus", "success");
-          res.redirect("/admin/item");
+          return res.redirect("/admin/item");
         }
       } else {
         item.categoryId = categoryId;
@@ -228,7 +228,7 @@ module.exports = {
         await item.save();
         req.flash("alertMessage", "Success Update Item");
         req.flash("alertStatus", "success");
-        res.redirect("/admin/item");
+        return res.redirect("/admin/item");
       }
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

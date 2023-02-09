@@ -20,7 +20,7 @@ const itemSchema = new mongoose.Schema({
   },
   sumOrder: {
     type: Number,
-    required: true,
+    default: 0,
   },
   status: {
     type: String,
