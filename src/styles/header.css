@@ -8,7 +8,7 @@
   text-align: center;
 }
 .logo img {
-  width: calc(100% - 60%);
+  width: calc(100% - 0%);
   object-fit: contain;
   margin-top: -40px;
 }
@@ -29,11 +29,11 @@
 }
 
 .menu a:hover {
-  color: #df2020;
+  color: #f15b27;
 }
 
 .active__menu {
-  color: #df2020 !important;
+  color: #f15b27 !important;
 }
 
 .cart__icon i,
@@ -52,7 +52,7 @@
   position: absolute;
   top: 30px;
   right: -10px;
-  background: #df2020;
+  background: #f15b27;
   color: #fff;
   width: 15px;
   height: 15px;

@@ -2,6 +2,7 @@
 import product_01_image_01 from "../images/product_01.jpg";
 import product_01_image_02 from "../images/product_01.1.jpg";
 import product_01_image_03 from "../images/product_01.3.jpg";
+import tes from "../images/1675908899709.jpg";
 
 import product_02_image_01 from "../images/product_2.1.jpg";
 import product_02_image_02 from "../images/product_2.2.jpg";
@@ -40,7 +41,7 @@ const products = [
     id: "02",
     title: "Vegetarian Pizza",
     price: 115.0,
-    image01: product_02_image_01,
+    image01: tes,
     image02: product_02_image_02,
     image03: product_02_image_03,
     category: "Pizza",

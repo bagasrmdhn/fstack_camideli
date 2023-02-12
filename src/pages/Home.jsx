@@ -35,32 +35,33 @@ const featureData = [
   {
     title: "Quick Delivery",
     imgUrl: featureImg01,
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+    desc: "Hot and fresh, delivered fast: Satisfy your cravings, make it last!",
   },
 
   {
     title: "Super Dine In",
     imgUrl: featureImg02,
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+    desc: "Fresh ingredients, thirst-quenching blends: Enjoy the taste, nourish within!",
   },
   {
     title: "Easy Pick Up",
     imgUrl: featureImg03,
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+    desc: "Effortless dining, at your fingertips: Self-pickup and savor, with zero trips!",
   },
 ];
 
 const Home = () => {
   const [category, setCategory] = useState("ALL");
   // const [allProducts, setAllProducts] = useState(products);
+
   const [allProducts, setAllProducts] = useState([]);
 
   const getProduct = async () => {
     const res = await axios.get(
       "https://server-camideli.yellowsandstravel.com/api/v1/member/landing-page"
     );
-    console.log(res.data);
-    setAllProducts(res.data);
+    console.log(res.data.item);
+    setAllProducts(res.data.item);
   };
 
   const [hotPizza, setHotPizza] = useState([]);
@@ -68,20 +69,20 @@ const Home = () => {
   useEffect(() => {
     const filteredPizza = products.filter((item) => item.category === "Pizza");
     const slicePizza = filteredPizza.slice(0, 4);
-    getProduct();
+
     setHotPizza(slicePizza);
   }, []);
 
   useEffect(() => {
     if (category === "ALL") {
-      setAllProducts(products);
+      getProduct();
     }
 
-    if (category === "BURGER") {
+    if (category === "DIMSUM") {
       const filteredProducts = products.filter(
-        (item) => item.category === "Burger"
+        (item) => item.category === "Dimsum"
       );
-
+      console.log(filteredProducts);
       setAllProducts(filteredProducts);
     }
 
@@ -117,8 +118,8 @@ const Home = () => {
                 </h1>
 
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui
-                  magni delectus tenetur autem, sint veritatis!
+                  Indulge in excellence, discover Camideli's: <br />
+                  Where premium food and drinks are a bliss!
                 </p>
 
                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
@@ -172,16 +173,14 @@ const Home = () => {
                 we will <span>take care</span>
               </h2>
               <p className="mb-1 mt-4 feature__text">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-                officiis?
+                Savor the bite, savor the delight:
               </p>
               <p className="feature__text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aperiam, eius.{" "}
+                Dimsum and drink all day and night!
               </p>
             </Col>
 
-            {/* {featureData.map((item, index) => (
+            {featureData.map((item, index) => (
               <Col lg="4" md="6" sm="6" key={index} className="mt-5">
                 <div className="feature__item text-center px-5 py-3">
                   <img
@@ -193,7 +192,7 @@ const Home = () => {
                   <p>{item.desc}</p>
                 </div>
               </Col>
-            ))} */}
+            ))}
           </Row>
         </Container>
       </section>
@@ -217,9 +216,9 @@ const Home = () => {
                 </button>
                 <button
                   className={`d-flex align-items-center gap-2 ${
-                    category === "BURGER" ? "foodBtnActive" : ""
+                    category === "DIMSUM" ? "foodBtnActive" : ""
                   } `}
-                  onClick={() => setCategory("BURGER")}
+                  onClick={() => setCategory("DIMSUM")}
                 >
                   <img src={foodCategoryImg01} alt="" />
                   Dimsum
@@ -247,11 +246,11 @@ const Home = () => {
               </div>
             </Col>
 
-            {/* {allProducts.map((item) => (
+            {allProducts.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
                 <ProductCard item={item} />
               </Col>
-            ))} */}
+            ))}
           </Row>
         </Container>
       </section>
@@ -314,7 +313,7 @@ const Home = () => {
         </Container>
       </section>
 
-      <section className="pt-0">
+      {/* <section className="pt-0">
         <Container>
           <Row>
             <Col lg="12" className="text-center mb-5 ">
@@ -328,7 +327,7 @@ const Home = () => {
             ))}
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       <section>
         <Container>

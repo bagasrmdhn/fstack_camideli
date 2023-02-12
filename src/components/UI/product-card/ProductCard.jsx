@@ -8,15 +8,16 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 
 const ProductCard = (props) => {
-  const { id, title, image01, price } = props.item;
+  const { _id, name, imageId, price } = props.item;
   const dispatch = useDispatch();
+  const imageUrl = imageId && imageId.length > 0 ? imageId[0].imageUrl : "";
 
   const addToCart = () => {
     dispatch(
       cartActions.addItem({
-        id,
-        title,
-        image01,
+        _id,
+        name,
+        imageUrl,
         price,
       })
     );
@@ -25,20 +26,24 @@ const ProductCard = (props) => {
   return (
     <div className="product__item">
       <div className="product__img">
-        <img src={image01} alt="product-img" className="w-50" />
+        <img
+          src={`${process.env.REACT_APP_HOST}/${imageUrl}`}
+          alt="product-img"
+          className="w-50"
+        />
       </div>
 
-      <Link to={`/foods/${id}`}>
-        <div className="product__content">
-          <h5>{title}</h5>
-          <div className=" d-flex align-items-center justify-content-between ">
-            <span className="product__price">${price}</span>
-            <button className="addTOCart__btn" onClick={addToCart}>
-              Add to Cart
-            </button>
-          </div>
+      <div className="product__content">
+        <Link to={`/foods/${_id}`}>
+          <h5>{name}</h5>
+        </Link>
+        <div className=" d-flex align-items-center justify-content-between ">
+          <span className="product__price">Rp{price}</span>
+          <button className="addTOCart__btn" onClick={addToCart}>
+            Add to Cart
+          </button>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
