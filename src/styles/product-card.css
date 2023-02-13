@@ -3,11 +3,20 @@
   text-align: center;
   padding: 30px;
   cursor: pointer;
+  min-height: 20rem;
+}
+
+.image-resize {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  object-position: center center;
 }
 
 .product__img {
   margin-bottom: 20px;
   transition: 0.4s;
+  object-fit: cover;
 }
 
 .product__img:hover {
