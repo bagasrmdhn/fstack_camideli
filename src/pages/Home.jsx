@@ -16,8 +16,6 @@ import featureImg01 from "../assets/images/service-01.png";
 import featureImg02 from "../assets/images/service-02.png";
 import featureImg03 from "../assets/images/service-03.png";
 
-import products from "../assets/fake-data/products.js";
-
 import foodCategoryImg01 from "../assets/images/hamburger.png";
 import foodCategoryImg02 from "../assets/images/pizza.png";
 import foodCategoryImg03 from "../assets/images/bread.png";
@@ -52,7 +50,6 @@ const featureData = [
 
 const Home = () => {
   const [category, setCategory] = useState("ALL");
-  // const [allProducts, setAllProducts] = useState(products);
 
   const [allProducts, setAllProducts] = useState([]);
 
@@ -60,17 +57,12 @@ const Home = () => {
     const res = await axios.get(
       "https://server-camideli.yellowsandstravel.com/api/v1/member/landing-page"
     );
-    console.log(res.data.item);
+    // console.log(res.data.item);
     setAllProducts(res.data.item);
   };
 
-  const [hotPizza, setHotPizza] = useState([]);
-
   useEffect(() => {
-    const filteredPizza = products.filter((item) => item.category === "Pizza");
-    const slicePizza = filteredPizza.slice(0, 4);
-
-    setHotPizza(slicePizza);
+    getProduct();
   }, []);
 
   useEffect(() => {
@@ -79,26 +71,23 @@ const Home = () => {
     }
 
     if (category === "DIMSUM") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Dimsum"
+      const filteredProducts = allProducts.filter(
+        (item) => item.categoryId[0].name === "Dimsum"
+      );
+      setAllProducts(filteredProducts);
+    }
+    if (category === "Kopi") {
+      const filteredProducts = allProducts.filter(
+        (item) => item.categoryId[0].name === "Kopi"
       );
       console.log(filteredProducts);
       setAllProducts(filteredProducts);
     }
-
-    if (category === "PIZZA") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Pizza"
+    if (category === "Cake") {
+      const filteredProducts = allProducts.filter(
+        (item) => item.categoryId[0].name === "Cake"
       );
-
-      setAllProducts(filteredProducts);
-    }
-
-    if (category === "BREAD") {
-      const filteredProducts = products.filter(
-        (item) => item.category === "Bread"
-      );
-
+      console.log(filteredProducts);
       setAllProducts(filteredProducts);
     }
   }, [category]);
@@ -226,9 +215,9 @@ const Home = () => {
 
                 <button
                   className={`d-flex align-items-center gap-2 ${
-                    category === "PIZZA" ? "foodBtnActive" : ""
+                    category === "Kopi" ? "foodBtnActive" : ""
                   } `}
-                  onClick={() => setCategory("PIZZA")}
+                  onClick={() => setCategory("Kopi")}
                 >
                   <img src={foodCategoryImg02} alt="" />
                   Coffee
@@ -236,9 +225,9 @@ const Home = () => {
 
                 <button
                   className={`d-flex align-items-center gap-2 ${
-                    category === "BREAD" ? "foodBtnActive" : ""
+                    category === "Cake" ? "foodBtnActive" : ""
                   } `}
-                  onClick={() => setCategory("BREAD")}
+                  onClick={() => setCategory("Cake")}
                 >
                   <img src={foodCategoryImg03} alt="" />
                   Cake

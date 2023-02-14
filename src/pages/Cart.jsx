@@ -33,7 +33,7 @@ const Cart = () => {
                   </thead>
                   <tbody>
                     {cartItems.map((item) => (
-                      <Tr item={item} key={item.id} />
+                      <Tr item={item} key={item._id} />
                     ))}
                   </tbody>
                 </table>
@@ -41,7 +41,7 @@ const Cart = () => {
 
               <div className="mt-4">
                 <h6>
-                  Subtotal: $
+                  Subtotal: Rp
                   <span className="cart__subtotal">{totalAmount}</span>
                 </h6>
                 <p>Taxes and shipping will calculate at checkout</p>
@@ -63,19 +63,20 @@ const Cart = () => {
 };
 
 const Tr = (props) => {
-  const { id, image01, title, price, quantity } = props.item;
+  const { _id, imageUrl, name, price, quantity } = props.item;
+
   const dispatch = useDispatch();
 
   const deleteItem = () => {
-    dispatch(cartActions.deleteItem(id));
+    dispatch(cartActions.deleteItem(_id));
   };
   return (
     <tr>
       <td className="text-center cart__img-box">
-        <img src={image01} alt="" />
+        <img src={`${process.env.REACT_APP_HOST}/${imageUrl}`} alt="" />
       </td>
-      <td className="text-center">{title}</td>
-      <td className="text-center">${price}</td>
+      <td className="text-center">{name}</td>
+      <td className="text-center">Rp{price}</td>
       <td className="text-center">{quantity}px</td>
       <td className="text-center cart__item-del">
         <i class="ri-delete-bin-line" onClick={deleteItem}></i>
