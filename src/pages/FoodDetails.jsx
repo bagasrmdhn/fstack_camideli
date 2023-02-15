@@ -13,6 +13,8 @@ import "../styles/product-details.css";
 
 import ProductCard from "../components/UI/product-card/ProductCard";
 
+import axios from "axios";
+
 const FoodDetails = () => {
   const [tab, setTab] = useState("desc");
   const [enteredName, setEnteredName] = useState("");
@@ -21,19 +23,39 @@ const FoodDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const product = products.find((product) => product.id === id);
-  const [previewImg, setPreviewImg] = useState(product.image01);
-  const { title, price, category, desc, image01 } = product;
+  // const product = products.find((product) => product.id === id);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://server-camideli.yellowsandstravel.com/api/v1/member/detail-page/${id}`
+        );
+        const data = response.data.item;
+        setProduct(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [id]);
 
-  const relatedProduct = products.filter((item) => category === item.category);
-
+  const { name, price, category, desc, imageId, description, categoryId } =
+    product;
+  const imageUrl = imageId && imageId.length > 0 ? imageId[0].imageUrl : "";
+  const helperImg = `${process.env.REACT_APP_HOST}/${imageUrl}`;
+  const categoryTitle =
+    categoryId && categoryId.length > 0 ? categoryId[0].name : "";
+  // console.log(categoryTitle);
+  // const relatedProduct = product.filter((item) => categoryTitle === item.category);
+  const [previewImg, setPreviewImg] = useState(imageUrl);
   const addItem = () => {
     dispatch(
       cartActions.addItem({
         id,
-        title,
+        name,
         price,
-        image01,
+        imageUrl,
       })
     );
   };
@@ -45,7 +67,7 @@ const FoodDetails = () => {
   };
 
   useEffect(() => {
-    setPreviewImg(product.image01);
+    setPreviewImg(product.imageUrl);
   }, [product]);
 
   useEffect(() => {
@@ -54,50 +76,55 @@ const FoodDetails = () => {
 
   return (
     <Helmet title="Product-details">
-      <CommonSection title={title} />
+      <CommonSection title={name} />
 
       <section>
         <Container>
           <Row>
             <Col lg="2" md="2">
               <div className="product__images ">
-                <div
-                  className="img__item mb-3"
-                  onClick={() => setPreviewImg(product.image01)}
-                >
-                  <img src={product.image01} alt="" className="w-50" />
-                </div>
-                <div
-                  className="img__item mb-3"
-                  onClick={() => setPreviewImg(product.image02)}
-                >
-                  <img src={product.image02} alt="" className="w-50" />
-                </div>
-
-                <div
-                  className="img__item"
-                  onClick={() => setPreviewImg(product.image03)}
-                >
-                  <img src={product.image03} alt="" className="w-50" />
-                </div>
+                {
+                  imageId && imageId.length > 0 ? ( // if imageId is not null
+                    imageId.map((item, index) => (
+                      <div
+                        className="img__item mb-3"
+                        onClick={() => setPreviewImg(item.imageUrl)}
+                        key={index}
+                      >
+                        <img
+                          src={`${process.env.REACT_APP_HOST}/${item.imageUrl}`}
+                          alt=""
+                          className="w-50"
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="img__item mb-3"> </div>
+                  )
+                  // <div
+                }
               </div>
             </Col>
 
             <Col lg="4" md="4">
               <div className="product__main-img">
-                <img src={previewImg} alt="" className="w-100" />
+                <img
+                  src={`${process.env.REACT_APP_HOST}/${previewImg}`}
+                  alt=""
+                  className="w-100"
+                />
               </div>
             </Col>
 
             <Col lg="6" md="6">
               <div className="single__product-content">
-                <h2 className="product__title mb-3">{title}</h2>
+                <h2 className="product__title mb-3">{name}</h2>
                 <p className="product__price">
                   {" "}
-                  Price: <span>${price}</span>
+                  Price: <span>Rp{price}</span>
                 </p>
                 <p className="category mb-5">
-                  Category: <span>{category}</span>
+                  Category: <span>{categoryTitle}</span>
                 </p>
 
                 <button onClick={addItem} className="addTOCart__btn">
@@ -114,18 +141,19 @@ const FoodDetails = () => {
                 >
                   Description
                 </h6>
-                <h6
+                {/* <h6
                   className={` ${tab === "rev" ? "tab__active" : ""}`}
                   onClick={() => setTab("rev")}
                 >
                   Review
-                </h6>
+                </h6> */}
               </div>
 
               {tab === "desc" ? (
-                <div className="tab__content">
-                  <p>{desc}</p>
-                </div>
+                <div
+                  className="tab__content"
+                  dangerouslySetInnerHTML={{ __html: description }}
+                ></div>
               ) : (
                 <div className="tab__form mb-3">
                   <div className="review pt-5">
@@ -182,15 +210,15 @@ const FoodDetails = () => {
               )}
             </Col>
 
-            <Col lg="12" className="mb-5 mt-4">
+            {/* <Col lg="12" className="mb-5 mt-4">
               <h2 className="related__Product-title">You might also like</h2>
-            </Col>
+            </Col> */}
 
-            {relatedProduct.map((item) => (
+            {/* {relatedProduct.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" className="mb-4" key={item.id}>
                 <ProductCard item={item} />
               </Col>
-            ))}
+            ))} */}
           </Row>
         </Container>
       </section>

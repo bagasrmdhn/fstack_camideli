@@ -36,7 +36,7 @@ const Checkout = () => {
     };
 
     shippingInfo.push(userShippingAddress);
-    console.log(shippingInfo);
+    // console.log(shippingInfo);
   };
 
   return (

@@ -29,7 +29,7 @@ const ProductCard = (props) => {
         <img
           src={`${process.env.REACT_APP_HOST}/${imageUrl}`}
           alt="product-img"
-          className="image-resize"
+          className="image-resize img-responsive"
         />
       </div>
 

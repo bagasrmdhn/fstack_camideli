@@ -8,7 +8,7 @@ import { cartActions } from "../../../store/shopping-cart/cartSlice";
 
 const CartItem = ({ item }) => {
   const { _id, name, price, imageUrl, quantity, totalPrice } = item;
-  console.log(item);
+  // console.log(item);
 
   const dispatch = useDispatch();
 

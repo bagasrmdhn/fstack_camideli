@@ -60,10 +60,10 @@ const Header = () => {
   return (
     <header className="header" ref={headerRef}>
       <Container>
-        <div className="nav__wrapper d-flex align-items-center justify-content-between">
+        <div className="nav__wrapper d-flex align-items-center justify-content-between mt-2">
           <div className="logo">
             <img src={logo} alt="logo" />
-            <h5>Tasty Treat</h5>
+            {/* <h5>Tasty Treat</h5> */}
           </div>
 
           {/* ======= menu ======= */}

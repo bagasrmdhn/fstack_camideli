@@ -13,6 +13,15 @@
 .feature__item p {
   color: #777;
 }
+.row_why {
+  align-items: center;
+}
+
+.img_why {
+  max-width: 67% !important;
+
+  margin-left: 110px;
+}
 
 .food__category {
   background: #f15b27;

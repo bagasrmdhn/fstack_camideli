@@ -10,7 +10,6 @@
 .logo img {
   width: calc(100% - 0%);
   object-fit: contain;
-  margin-top: -40px;
 }
 
 .logo h5 {
