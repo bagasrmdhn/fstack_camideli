@@ -18,7 +18,6 @@ const Checkout = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const orderedItems = useSelector((state) => state.cart.cartItems);
 
-  // console.log(orderedItems);
   const shippingCost = 30;
 
   const totalAmount = cartTotalAmount + Number(shippingCost);
@@ -36,7 +35,7 @@ const Checkout = () => {
     };
 
     shippingInfo.push(userShippingAddress);
-    // console.log(shippingInfo);
+    console.log(shippingInfo);
   };
 
   return (
