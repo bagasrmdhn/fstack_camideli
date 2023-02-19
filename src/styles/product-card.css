@@ -53,9 +53,39 @@
   }
   .product__item {
     padding: 20px;
+    min-height: 18rem;
+  }
+  .product__img {
+    margin-bottom: 10px;
+  }
+  .image-resize {
+    height: 150px;
+    width: 150px;
   }
   .addTOCart__btn {
     padding: 5px 15px;
+    font-size: 0.7rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .product__content h5 {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .product__content h5 a {
+    font-size: 0.8rem;
+  }
+  .product__item {
+    padding: 15px;
+    min-height: 16rem;
+  }
+  .image-resize {
+    height: 120px;
+    width: 120px;
+  }
+  .addTOCart__btn {
+    padding: 5px 10px;
     font-size: 0.7rem;
   }
 }

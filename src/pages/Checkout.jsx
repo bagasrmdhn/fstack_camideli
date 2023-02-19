@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Toast, ToastHeader } from "reactstrap";
 import CommonSection from "../components/UI/common-section/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 import mandiriImg from "../assets/images/mandiri.svg";
 import bcaImg from "../assets/images/bca.png";
+import { orderingSubmit, reset } from "../store/Order/orderSlice";
+import Swal from "sweetalert2";
 
 import "../styles/checkout.css";
 
@@ -21,7 +23,6 @@ const Checkout = () => {
   const [enterBankAccountName, setEnterBankAccountName] = useState("");
   const [enterAddress, setEnterAddress] = useState("");
 
-  const shippingInfo = [];
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const orderedItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
@@ -30,30 +31,49 @@ const Checkout = () => {
   const user = useSelector((state) => state.auth.user);
 
   const totalAmount = cartTotalAmount + Number(shippingCost);
+  const { isError, isLoading, isSuccess } = useSelector((state) => state.order);
+
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire({
+        title: "Success!",
+        text: "Your order has been placed",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+
+      dispatch(reset());
+    }
+    if (isError) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  }, [isSuccess, isError, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     const orderDetails = {
       firstName: enterFirstName,
       lastName: enterLastName,
+      orderDate: new Date().toLocaleDateString(),
       image: enterImageUpload,
       email: user.user.email,
-      phone: enterNumber,
+      phoneNumber: enterNumber,
       address: enterAddress,
       city: enterCity,
       postalCode: postalCode,
       bankFrom: enterBankFrom,
       bankTo: enterBankTo,
-      bankAccountName: enterBankAccountName,
+      accountHolder: enterBankAccountName,
       total: totalAmount,
-      idItem: orderedItems,
-      qty: orderedItems.qty,
+      items: orderedItems,
     };
-
-    shippingInfo.push(orderDetails);
-
-    dispatch({});
-    console.log(shippingInfo);
+    console.log(orderDetails);
+    dispatch(orderingSubmit(orderDetails));
   };
 
   return (
@@ -64,7 +84,11 @@ const Checkout = () => {
           <Row>
             <Col lg="8" md="6">
               <h6 className="mb-4">Shipping Address</h6>
-              <form className="checkout__form" onSubmit={submitHandler}>
+              <form
+                className="checkout__form"
+                onSubmit={submitHandler}
+                encType="multipart/form-data"
+              >
                 <div className="form__group">
                   <input
                     type="text"
@@ -104,7 +128,7 @@ const Checkout = () => {
                     type="file"
                     placeholder="Upload proof of payment"
                     required
-                    onChange={(e) => setEnterImageUpload(e.target.value)}
+                    onChange={(e) => setEnterImageUpload(e.target.files[0])}
                   />
                 </div>
                 <div className="form__group">
@@ -167,7 +191,13 @@ const Checkout = () => {
                 </div>
 
                 <button type="submit" className="addTOCart__btn">
-                  Payment
+                  {isLoading ? (
+                    <div className="spinner-border text-light" role="status">
+                      <span className="sr-only"></span>
+                    </div>
+                  ) : (
+                    "Place Order"
+                  )}
                 </button>
               </form>
             </Col>

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-
-import products from "../assets/fake-data/products";
 import { useParams } from "react-router-dom";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
@@ -10,8 +8,6 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../store/shopping-cart/cartSlice";
 
 import "../styles/product-details.css";
-
-import ProductCard from "../components/UI/product-card/ProductCard";
 
 import axios from "axios";
 
