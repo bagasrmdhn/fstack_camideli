@@ -2,44 +2,58 @@ import React, { useRef, useEffect } from "react";
 
 import { Container } from "reactstrap";
 import logo from "../../assets/images/res-logo.png";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { cartUiActions } from "../../store/shopping-cart/cartUiSlice";
-
+import { LogOut, reset } from "../../store/Auth/authSlice";
 import "../../styles/header.css";
-
-const nav__links = [
-  {
-    display: "Home",
-    path: "/home",
-  },
-  {
-    display: "Foods",
-    path: "/foods",
-  },
-  {
-    display: "Cart",
-    path: "/cart",
-  },
-  {
-    display: "Contact",
-    path: "/contact",
-  },
-];
 
 const Header = () => {
   const menuRef = useRef(null);
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const nameUser = useSelector((state) => state.auth.name);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
+
+  const navigate = useNavigate();
 
   const toggleCart = () => {
     dispatch(cartUiActions.toggle());
   };
 
+  const logOutHandler = () => {
+    dispatch(LogOut());
+    dispatch(reset());
+    navigate("/login");
+  };
+  const nav__links = [
+    {
+      display: "Home",
+      path: "/home",
+    },
+    {
+      display: "Foods",
+      path: "/foods",
+    },
+    user
+      ? {
+          display: "Cart",
+          path: "/cart",
+        }
+      : {
+          display: "Login",
+          path: "/login",
+        },
+
+    {
+      display: "Contact",
+      path: "/contact",
+    },
+  ];
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (headerRef.current) {
@@ -90,11 +104,19 @@ const Header = () => {
               <span className="cart__badge">{totalQuantity}</span>
             </span>
 
-            <span className="user">
-              <Link to="/login">
-                <i class="ri-user-line"></i>
-              </Link>
-            </span>
+            {user ? (
+              <span className="user">
+                <Link to="/home" onClick={logOutHandler}>
+                  Logout
+                </Link>
+              </span>
+            ) : (
+              <span className="user">
+                <Link to="/login">
+                  <i class="ri-user-line"></i>
+                </Link>
+              </span>
+            )}
 
             <span className="mobile__menu" onClick={toggleMenu}>
               <i class="ri-menu-line"></i>

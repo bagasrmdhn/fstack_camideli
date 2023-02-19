@@ -236,8 +236,8 @@ const Home = () => {
             </Col>
 
             {allProducts.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
-                <ProductCard item={item} />
+              <Col lg="3" md="4" sm="6" xs="6" key={item._id} className="mt-5">
+                <ProductCard item={item} key={item._id} />
               </Col>
             ))}
           </Row>
