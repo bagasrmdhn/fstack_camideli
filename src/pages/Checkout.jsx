@@ -57,6 +57,7 @@ const Checkout = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const orderDetails = {
+      userId: user.user.id,
       firstName: enterFirstName,
       lastName: enterLastName,
       orderDate: new Date().toLocaleDateString(),

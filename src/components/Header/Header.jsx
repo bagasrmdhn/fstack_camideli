@@ -13,7 +13,6 @@ const Header = () => {
   const menuRef = useRef(null);
   const headerRef = useRef(null);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  const nameUser = useSelector((state) => state.auth.name);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -25,10 +24,11 @@ const Header = () => {
     dispatch(cartUiActions.toggle());
   };
 
-  const logOutHandler = () => {
+  const logOutHandler = (e) => {
     dispatch(LogOut());
     dispatch(reset());
     navigate("/login");
+    e.preventDefault();
   };
   const nav__links = [
     {
@@ -115,6 +115,12 @@ const Header = () => {
                 <Link to="/login">
                   <i class="ri-user-line"></i>
                 </Link>
+              </span>
+            )}
+
+            {user && (
+              <span className="user">
+                <Link to={`/history/${user.user.id}`}>History</Link>
               </span>
             )}
 

@@ -1,10 +1,28 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { Container } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
-const history = "";
+
 const MyOrder = () => {
   const [transactions, setTransactions] = useState([]);
+  const { id } = useParams();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          ` http://localhost:3000/api/v1/member/history/${id}`
+        );
+        const data = response.data.order;
+        console.log(data);
+        setTransactions(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Helmet title="My Order">
@@ -25,19 +43,12 @@ const MyOrder = () => {
               <tbody>
                 {transactions.map((transaction) => (
                   <tr key={transaction._id}>
+                    <td>{transaction.invoice}</td>
                     <td>
-                      <button
-                        className="btn btn-link"
-                        onClick={() =>
-                          history.push(`/transactions/${transaction._id}`)
-                        }
-                      >
-                        {transaction._id}
-                      </button>
+                      {transaction.orderDate.toLocaleString().substr(0, 9)}
                     </td>
-                    <td>{transaction.date}</td>
-                    <td>{transaction.amount}</td>
-                    <td>{transaction.status}</td>
+                    <td>{transaction.total}</td>
+                    <td>{transaction.payments.status}</td>
                   </tr>
                 ))}
               </tbody>

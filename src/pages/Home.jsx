@@ -318,7 +318,7 @@ const Home = () => {
         </Container>
       </section> */}
 
-      <section>
+      {/* <section>
         <Container>
           <Row>
             <Col lg="6" md="6">
@@ -342,7 +342,7 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
     </Helmet>
   );
 };
