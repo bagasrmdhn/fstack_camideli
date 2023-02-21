@@ -26,8 +26,8 @@ const Checkout = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const orderedItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
-
-  const shippingCost = 30;
+  const noRekBca = "2141301367";
+  const shippingCost = 10000;
   const user = useSelector((state) => state.auth.user);
 
   const totalAmount = cartTotalAmount + Number(shippingCost);
@@ -207,19 +207,20 @@ const Checkout = () => {
               <Row>
                 <div className="checkout__bill">
                   <h6 className="d-flex align-items-center justify-content-between mb-3">
-                    Subtotal: <span>Rp{cartTotalAmount}</span>
+                    Subtotal:{" "}
+                    <span>Rp{cartTotalAmount.toLocaleString("id")}</span>
                   </h6>
                   <h6 className="d-flex align-items-center justify-content-between mb-3">
-                    Shipping: <span>Rp{shippingCost}</span>
+                    Shipping: <span>Rp{shippingCost.toLocaleString("id")}</span>
                   </h6>
                   <div className="checkout__total">
                     <h5 className="d-flex align-items-center justify-content-between">
-                      Total: <span>Rp{totalAmount}</span>
+                      Total: <span>Rp{totalAmount.toLocaleString("id")}</span>
                     </h5>
                   </div>
                 </div>
                 <div className=" mt-5">
-                  <h6 className="d-flex align-items-left justify-content-between mb-3 ">
+                  {/* <h6 className="d-flex align-items-left justify-content-between mb-3 ">
                     <div>
                       <p>Bank Mandiri</p>
                       <p>Account Number: 123456789</p>
@@ -228,14 +229,14 @@ const Checkout = () => {
                     <span>
                       <img className="bank-logo" src={mandiriImg} alt="" />
                     </span>
-                  </h6>
+                  </h6> */}
 
                   <div className="checkout__total">
                     <h6 className="d-flex align-items-left justify-content-between mb-3 ">
                       <div>
                         <p>Bank BCA</p>
-                        <p>Account Number: 123456789</p>
-                        <p>Account Name: John Doe</p>
+                        <p>Account Number: {noRekBca} </p>
+                        <p>Account Name: Sarah Farida Ainun</p>
                       </div>
                       <span>
                         <img className="bank-logo" src={bcaImg} alt="" />

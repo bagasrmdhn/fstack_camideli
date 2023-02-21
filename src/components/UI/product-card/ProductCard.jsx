@@ -38,7 +38,7 @@ const ProductCard = (props) => {
           <h5>{name}</h5>
         </Link>
         <div className="d-flex align-items-center justify-content-between">
-          <span className="product__price">Rp{price}</span>
+          <span className="product__price">Rp{price.toLocaleString("id")}</span>
           <button className="addTOCart__btn" onClick={addToCart}>
             Add to Cart
           </button>

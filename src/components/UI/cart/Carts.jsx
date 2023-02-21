@@ -38,7 +38,7 @@ const Carts = () => {
 
         <div className="cart__bottom d-flex align-items-center justify-content-between">
           <h6>
-            Subtotal : <span>Rp{totalAmount}</span>
+            Subtotal : <span>Rp{totalAmount.toLocaleString("id")}</span>
           </h6>
           <button>
             <Link to="/checkout" onClick={toggleCart}>

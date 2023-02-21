@@ -52,7 +52,7 @@ const Footer = () => {
             </ListGroup>
           </Col>
 
-          <Col lg="3" md="4" sm="6">
+          {/* <Col lg="3" md="4" sm="6">
             <h5 className="footer__title">Newsletter</h5>
             <p>Subscribe our newsletter</p>
             <div className="newsletter">
@@ -61,7 +61,7 @@ const Footer = () => {
                 <i class="ri-send-plane-line"></i>
               </span>
             </div>
-          </Col>
+          </Col> */}
         </Row>
 
         <Row className="mt-5">
@@ -71,7 +71,7 @@ const Footer = () => {
               Reserved.
             </p>
           </Col>
-          <Col lg="6" md="6">
+          {/* <Col lg="6" md="6">
             <div className="social__links d-flex align-items-center gap-4 justify-content-end">
               <p className="m-0">Follow: </p>
               <span>
@@ -101,7 +101,7 @@ const Footer = () => {
                 </Link>{" "}
               </span>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </footer>

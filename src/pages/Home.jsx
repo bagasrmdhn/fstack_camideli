@@ -53,6 +53,8 @@ const Home = () => {
 
   const [allProducts, setAllProducts] = useState([]);
 
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
   const getProduct = async () => {
     const res = await axios.get(
       "https://server-camideli.yellowsandstravel.com/api/v1/member/landing-page"
@@ -67,30 +69,30 @@ const Home = () => {
 
   useEffect(() => {
     if (category === "ALL") {
-      getProduct();
+      setFilteredProducts(allProducts);
     }
 
     if (category === "DIMSUM") {
       const filteredProducts = allProducts.filter(
         (item) => item.categoryId[0].name === "Dimsum"
       );
-      setAllProducts(filteredProducts);
+      setFilteredProducts(filteredProducts);
     }
     if (category === "Kopi") {
       const filteredProducts = allProducts.filter(
         (item) => item.categoryId[0].name === "Kopi"
       );
       console.log(filteredProducts);
-      setAllProducts(filteredProducts);
+      setFilteredProducts(filteredProducts);
     }
     if (category === "Cake") {
       const filteredProducts = allProducts.filter(
         (item) => item.categoryId[0].name === "Cake"
       );
       console.log(filteredProducts);
-      setAllProducts(filteredProducts);
+      setFilteredProducts(filteredProducts);
     }
-  }, [category]);
+  }, [category, allProducts]);
 
   return (
     <Helmet title="Home">
@@ -113,7 +115,9 @@ const Home = () => {
 
                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
                   <button className="order__btn d-flex align-items-center justify-content-between">
-                    Order now <i class="ri-arrow-right-s-line"></i>
+                    <Link to="/foods">
+                      Order now <i class="ri-arrow-right-s-line"></i>
+                    </Link>
                   </button>
 
                   <button className="all__foods-btn">
@@ -235,7 +239,7 @@ const Home = () => {
               </div>
             </Col>
 
-            {allProducts.map((item) => (
+            {filteredProducts.map((item) => (
               <Col lg="3" md="4" sm="6" xs="6" key={item._id} className="mt-5">
                 <ProductCard item={item} key={item._id} />
               </Col>

@@ -43,7 +43,7 @@ const CartItem = ({ item }) => {
           <div>
             <h6 className="cart__product-name">{name}</h6>
             <p className=" d-flex align-items-center gap-5 cart__product-price">
-              {quantity}x <span>Rp{totalPrice}</span>
+              {quantity}x <span>Rp{totalPrice.toLocaleString("id")}</span>
             </p>
             <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
               <span className="increase__btn" onClick={incrementItem}>

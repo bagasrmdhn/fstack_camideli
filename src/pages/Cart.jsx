@@ -50,7 +50,9 @@ const Cart = () => {
               <div className="mt-4">
                 <h6>
                   Subtotal: Rp
-                  <span className="cart__subtotal">{totalAmount}</span>
+                  <span className="cart__subtotal">
+                    {totalAmount.toLocaleString("id")}
+                  </span>
                 </h6>
                 <p>Taxes and shipping will calculate at checkout</p>
                 <div className="cart__page-btn">
@@ -84,7 +86,7 @@ const Tr = (props) => {
         <img src={`${process.env.REACT_APP_HOST}/${imageUrl}`} alt="" />
       </td>
       <td className="text-center">{name}</td>
-      <td className="text-center">Rp{price}</td>
+      <td className="text-center">Rp{price.toLocaleString("id")}</td>
       <td className="text-center">{quantity}px</td>
       <td className="text-center cart__item-del">
         <i class="ri-delete-bin-line" onClick={deleteItem}></i>
