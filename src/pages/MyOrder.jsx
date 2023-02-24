@@ -12,7 +12,7 @@ const MyOrder = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          ` http://localhost:3000/api/v1/member/history/${id}`
+          `https://server-camideli.yellowsandstravel.com/api/v1/member/history/${id}`
         );
         const data = response.data.order;
         console.log(data);
