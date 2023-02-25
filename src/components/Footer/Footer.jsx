@@ -43,11 +43,11 @@ const Footer = () => {
                 <p>Location: Petemon 2/124, Surabaya - 60252</p>
               </ListGroupItem>
               <ListGroupItem className=" delivery__time-item border-0 ps-0">
-                <span>Phone: 087854934931</span>
+                <span>Phone: +62 881-0818-98739</span>
               </ListGroupItem>
 
               <ListGroupItem className=" delivery__time-item border-0 ps-0">
-                <span>Email: example@gmail.com</span>
+                <span>Email: camideli.sub@gmail.com</span>
               </ListGroupItem>
             </ListGroup>
           </Col>
