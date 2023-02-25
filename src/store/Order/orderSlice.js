@@ -14,7 +14,7 @@ export const orderingSubmit = createAsyncThunk(
   async (order, thunkAPI) => {
     try {
       const response = await axios.post(
-        "https://server-camideli.yellowsandstravel.com/api/v1/member/order-page",
+        "http://localhost:3000/api/v1/member/order-page",
         {
           userId: order.userId,
           email: order.email,

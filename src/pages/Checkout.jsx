@@ -84,7 +84,7 @@ const Checkout = () => {
         <Container>
           <Row>
             <Col lg="8" md="6">
-              <h6 className="mb-4">Shipping Address</h6>
+              <h6 className="mb-4">Alamat dan Detail Pengiriman</h6>
               <form
                 className="checkout__form"
                 onSubmit={submitHandler}
@@ -93,7 +93,7 @@ const Checkout = () => {
                 <div className="form__group">
                   <input
                     type="text"
-                    placeholder="Enter your first name"
+                    placeholder="First Name"
                     required
                     onChange={(e) => setEnterFirstName(e.target.value)}
                   />
@@ -101,7 +101,7 @@ const Checkout = () => {
                 <div className="form__group">
                   <input
                     type="text"
-                    placeholder="Enter your last name"
+                    placeholder="Last Name"
                     required
                     onChange={(e) => setEnterLastName(e.target.value)}
                   />
@@ -110,7 +110,7 @@ const Checkout = () => {
                 <div className="form__group">
                   <input
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="Email (Contoh : emailanda@gmail.com)"
                     value={user.user.email}
                     required
                     onChange={(e) => setEnterEmail(e.target.value)}
@@ -119,31 +119,15 @@ const Checkout = () => {
                 <div className="form__group">
                   <input
                     type="number"
-                    placeholder="Phone number"
+                    placeholder="Nomor Handphone"
                     required
                     onChange={(e) => setEnterNumber(e.target.value)}
                   />
                 </div>
                 <div className="form__group">
                   <input
-                    type="file"
-                    placeholder="Upload proof of payment"
-                    required
-                    onChange={(e) => setEnterImageUpload(e.target.files[0])}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
                     type="text"
-                    placeholder="From Bank"
-                    required
-                    onChange={(e) => setEnterBankFrom(e.target.value)}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="City"
+                    placeholder="Kota"
                     required
                     onChange={(e) => setEnterCity(e.target.value)}
                   />
@@ -151,17 +135,9 @@ const Checkout = () => {
                 <div className="form__group">
                   <input
                     type="text"
-                    placeholder="Postal Code"
+                    placeholder="Kode Pos"
                     required
                     onChange={(e) => setPostalCode(e.target.value)}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="bank account name"
-                    required
-                    onChange={(e) => setEnterBankAccountName(e.target.value)}
                   />
                 </div>
 
@@ -171,14 +147,40 @@ const Checkout = () => {
                     id="address"
                     cols="30"
                     rows="5"
-                    placeholder="Enter your address"
+                    placeholder="Alamat Pengiriman"
                     onChange={(e) => setEnterAddress(e.target.value)}
                     required
                   ></textarea>
                 </div>
 
+                <div className="form__group">
+                  <label htmlFor=""><h6>Upload Bukti Pembayaran</h6></label>
+                  <input
+                    type="file"
+                    placeholder="Upload Bukti Pembayaran"
+                    required
+                    onChange={(e) => setEnterImageUpload(e.target.files[0])}
+                  />
+                </div>
+                <div className="form__group">
+                  <input
+                    type="text"
+                    placeholder="Transfer dari Bank (Contoh : Bank Mandiri)"
+                    required
+                    onChange={(e) => setEnterBankFrom(e.target.value)}
+                  />
+                </div>
+                <div className="form__group">
+                  <input
+                    type="text"
+                    placeholder="Atas Nama Rekening (Contoh : a/n Samira Rahma)"
+                    required
+                    onChange={(e) => setEnterBankAccountName(e.target.value)}
+                  />
+                </div>
+
                 <div className=" form__group">
-                  <label htmlFor="bankTo">Bank To</label>
+                  <label htmlFor="bankTo">Transfer ke Alamat Bank</label>
                   <select
                     className="form-control"
                     name="bankTo"
